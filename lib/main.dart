@@ -1,14 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:guess_it/create_word_page.dart';
-import 'package:guess_it/non_page.dart';
 
 import 'package:go_router/go_router.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
+import 'package:guess_it/create_word_page.dart';
+import 'package:guess_it/non_page.dart';
 import 'package:guess_it/home_page.dart';
 import 'package:guess_it/word_page.dart';
 
-void main() {
+void main() async {
   GoRouter.setUrlPathStrategy(UrlPathStrategy.path);
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(MyApp());
 }
 
@@ -22,23 +26,17 @@ class MyApp extends StatelessWidget {
             builder: (BuildContext context, GoRouterState state) =>
                 const HomePage()),
         GoRoute(
-            name: 'word_create',
             path: '/word/create',
-            builder: (BuildContext context, GoRouterState state) {
-              print('Heyy');
-              return const CreateWordPage();
-            }),
+            builder: (BuildContext context, GoRouterState state) =>
+                const CreateWordPage()),
         GoRoute(
-            path: '/word/:wid',
-            builder: (BuildContext context, GoRouterState state) {
-              return WordPage(
-                  wordId: state.params.containsKey('wid')
-                      ? state.params['wid']!
-                      : '');
-            }),
+            path: '/wid/:wid',
+            builder: (BuildContext context, GoRouterState state) => WordPage(
+                wordId: state.params.containsKey('wid')
+                    ? state.params['wid']!
+                    : '')),
       ],
       errorBuilder: (BuildContext context, GoRouterState state) {
-        print(state.error);
         return const NonPage();
       });
 

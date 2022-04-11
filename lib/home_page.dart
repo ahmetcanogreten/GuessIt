@@ -25,7 +25,7 @@ class _HomePageState extends State<HomePage> {
             ),
             ElevatedButton(
                 onPressed: () {
-                  GoRouter.of(context).go('/word/');
+                  GoRouter.of(context).go('/word/create');
                 },
                 child: Text('Create Word Game')),
           ],
