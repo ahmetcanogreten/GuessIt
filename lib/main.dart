@@ -4,10 +4,8 @@ import 'package:go_router/go_router.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
-import 'package:guess_it/create_word_page.dart';
-import 'package:guess_it/non_page.dart';
-import 'package:guess_it/home_page.dart';
-import 'package:guess_it/word_page.dart';
+import 'pages/barrel_pages.dart';
+import 'package:guess_it/themes.dart';
 
 void main() async {
   GoRouter.setUrlPathStrategy(UrlPathStrategy.path);
@@ -18,6 +16,8 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   MyApp({Key? key}) : super(key: key);
+
+  bool isDarkTheme = true;
 
   final GoRouter _router = GoRouter(
       routes: <GoRoute>[
@@ -43,8 +43,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
+      debugShowCheckedModeBanner: false,
       routerDelegate: _router.routerDelegate,
       routeInformationParser: _router.routeInformationParser,
+      darkTheme: darkTheme,
+      theme: isDarkTheme ? darkTheme : lightTheme,
     );
   }
 }
