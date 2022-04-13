@@ -13,32 +13,39 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBody: true,
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: <Widget>[
-            Text(
-              'Guess it',
-              style: Theme.of(context).textTheme.headline1,
-              textAlign: TextAlign.center,
-            ),
-            LayoutBuilder(
-                builder: (BuildContext context, BoxConstraints constraints) {
-              return ElevatedButton(
-                  style: ButtonStyle(
-                      minimumSize: MaterialStateProperty.all<Size>(
-                          Size(constraints.maxWidth * 0.5, 100))),
-                  onPressed: () {
-                    GoRouter.of(context).go('/word/create');
-                  },
-                  child: Text(
-                    'Create A Game',
-                    style: Theme.of(context).textTheme.headline3,
-                  ));
+      body: LayoutBuilder(builder: (context, constraints) {
+        return Center(
+          child: SizedBox(
+            width: constraints.maxWidth > 700 ? 700 : constraints.maxWidth,
+            child: LayoutBuilder(builder: (context, constraints) {
+              return Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: <Widget>[
+                    Text(
+                      'Guess it',
+                      style: TextStyle(fontSize: constraints.maxWidth * 0.2),
+                      textAlign: TextAlign.center,
+                    ),
+                    ElevatedButton(
+                        style: ButtonStyle(
+                            minimumSize: MaterialStateProperty.all<Size>(
+                                Size(constraints.maxWidth * 0.5, 100))),
+                        onPressed: () {
+                          GoRouter.of(context).go('/word/create');
+                        },
+                        child: Text(
+                          'Create A Game',
+                          style:
+                              TextStyle(fontSize: constraints.maxWidth * 0.05),
+                        ))
+                  ],
+                ),
+              );
             }),
-          ],
-        ),
-      ),
+          ),
+        );
+      }),
     );
   }
 }
