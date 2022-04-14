@@ -173,7 +173,7 @@ class _WordPageState extends State<WordPage> {
                             ElevatedButton(
                               onPressed: words.contains(
                                       enteredGuesses[currentGuess]
-                                          .replaceAll(RegExp(r'i'), 'İ')
+                                          .replaceAll(RegExp(r'İ'), 'i')
                                           .replaceAll(RegExp(r'I'), 'ı')
                                           .toLowerCase())
                                   ? handleGuess
@@ -238,8 +238,11 @@ class _WordPageState extends State<WordPage> {
                           controller: textController,
                           onChanged: (value) {
                             setState(() {
-                              enteredGuesses[currentGuess] =
-                                  value.padRight(game.word.length);
+                              enteredGuesses[currentGuess] = value
+                                  .padRight(game.word.length)
+                                  .replaceAll(RegExp(r'İ'), 'i')
+                                  .replaceAll(RegExp(r'I'), 'ı')
+                                  .toLowerCase();
                             });
                           },
                         ),
