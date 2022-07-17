@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:go_router/go_router.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:guess_it/themes/cubit/theme_cubit.dart';
 import 'firebase_options.dart';
 
-import 'pages/barrel_pages.dart';
-import 'package:guess_it/themes.dart';
+import 'screens/barrel_screens.dart';
+import 'package:guess_it/themes/themes.dart';
 
 void main() async {
   GoRouter.setUrlPathStrategy(UrlPathStrategy.path);
@@ -17,8 +19,6 @@ void main() async {
 class MyApp extends StatelessWidget {
   MyApp({Key? key}) : super(key: key);
 
-  bool isDarkTheme = true;
-
   final GoRouter _router = GoRouter(
       routes: <GoRoute>[
         GoRoute(
@@ -26,11 +26,11 @@ class MyApp extends StatelessWidget {
             builder: (BuildContext context, GoRouterState state) =>
                 const HomePage()),
         GoRoute(
-            path: '/word/create',
+            path: '/word',
             builder: (BuildContext context, GoRouterState state) =>
                 const CreateWordPage()),
         GoRoute(
-            path: '/wid/:wid',
+            path: '/word/:wid',
             builder: (BuildContext context, GoRouterState state) => WordPage(
                 wordId: state.params.containsKey('wid')
                     ? state.params['wid']!
@@ -42,12 +42,18 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      debugShowCheckedModeBanner: false,
-      routerDelegate: _router.routerDelegate,
-      routeInformationParser: _router.routeInformationParser,
-      darkTheme: darkTheme,
-      theme: isDarkTheme ? darkTheme : lightTheme,
-    );
+    return BlocProvider(
+        create: (_) => ThemeCubit(),
+        child: BlocBuilder<ThemeCubit, ThemeState>(
+          builder: (context, state) {
+            return MaterialApp.router(
+              debugShowCheckedModeBanner: false,
+              routerDelegate: _router.routerDelegate,
+              routeInformationParser: _router.routeInformationParser,
+              darkTheme: darkTheme,
+              theme: state is ThemeDark ? darkTheme : lightTheme,
+            );
+          },
+        ));
   }
 }

@@ -15,12 +15,17 @@ dependencies:
   go_router: ^3.0.7
   firebase_core: ^1.14.0
   cloud_firestore: ^3.1.11
+  json_annotation: ^4.4.0
+  flutter_bloc: ^8.0.1
+  bloc: ^8.0.3
 
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^1.0.0
+  build_runner: ^2.1.10
+  json_serializable: ^6.1.6
 
 
 flutter:
